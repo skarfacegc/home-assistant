@@ -1,0 +1,80 @@
+- name: Basement Movie
+  icon: "mdi:television"
+  entities:
+    light.basement_tv_lights:
+      state: "on"
+      brightness: 50
+      color_temp: 360
+    light.ravens_neon_24: 
+      state: "off"
+    light.bar_outlet_20: 
+      state: "off"
+    remote.basement:
+      state: "on"
+
+- name: Basement Dim
+  icon: "mdi:lightbulb-on-outline"
+  entities:
+    light.basement_tv_lights:
+      state: "on"
+      brightness: 50
+      color_temp: 360
+    light.ravens_neon_24: 
+      state: "off"
+    light.bar_outlet_20: 
+      state: "off"
+    
+- name: Basement Bright
+  icon: "mdi:lightbulb-on"
+  entities:
+    light.basement_tv_lights:
+      state: "on"
+      brightness: 255
+      color_temp: 340
+    light.ravens_neon_24: 
+      state: "on"
+    light.bar_outlet_20: 
+      state: "on"
+    light.hall_mirror:
+      state: "on"
+      brightness: 255
+      color_temp: 340
+
+- name: Basement Off
+  icon: "mdi:power"
+  entities:
+    group.basement:
+      state: "off"
+
+- name: Livingroom Dim
+  icon: "mdi:television"
+  entities:
+    light.livingroom_tv_lights:
+      state: "on"
+      brightness: 90
+      color_temp: 360
+    switch.upstairs_mantel_36:
+      state: "off"
+    light.main_hall_outlet_22:
+      state: "off"
+
+- name: Livingroom Bright
+  icon: "mdi:television"
+  entities:
+    light.livingroom_tv_lights:
+      state: "on"
+      brightness: 255
+      color_temp: 340
+    switch.upstairs_mantel_36:
+      state: "on"
+    light.main_hall_outlet_22:
+      state: "on"
+
+
+
+- name: Livingroom Off
+  icon: "mdi:power"
+  entities:
+    group.living_room:
+      state: "off"
+

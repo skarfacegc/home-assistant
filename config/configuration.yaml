@@ -1,0 +1,103 @@
+homeassistant:
+  allowlist_external_dirs: !include external_dirs.yaml
+  customize: !include customize.yaml
+  auth_providers: !include auth_settings.yaml
+
+  
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+http:
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+
+
+vera:
+  vera_controller_url: !secret vera_url
+  lights: [14, 15, 16, 17, 20, 22, 23, 24]
+
+hacs:
+  token: !secret hacs_token
+
+# mmm_beer is mobile app
+# mmmbeer is orbi detection
+device_tracker:
+  - platform: netgear
+    host: !secret ap_host
+    username: !secret ap_username
+    password: !secret ap_password
+    port: 80
+    accesspoints: false
+    devices: !include presence_devices.yaml
+    new_device_defaults:
+      track_new_devices: true
+
+lovelace:
+  mode: yaml
+  resources:
+    - url: /hacsfiles/button-card/button-card.js
+      type: module
+    - url: /hacsfiles/themable-grid/themable-grid.js
+      type: module
+    - url: /hacsfiles/stack-in-card/stack-in-card.js
+      type: module
+    - url: /hacsfiles/decluttering-card/decluttering-card.js
+      type: module  
+    - url: /hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js
+      type: module
+    - url: /hacsfiles/kiosk-mode/kiosk-mode.js
+      type: module
+
+light:
+  - platform: group
+    name: Basement TV Lights
+    entities:
+      - light.basement_tv_left
+      - light.basement_tv_right
+  - platform: group
+    name: Livingroom TV Lights
+    entities:
+      - light.tv_left
+      - light.tv_right
+
+image_processing:
+  - platform: doods
+    url: !secret doods_url
+    scan_interval: 5
+    confidence: 60
+    detector: default
+    labels:
+      - name: person
+      - name: cat
+      - name: dog
+      - name: car
+      - name: motorcycle
+      - name: bus
+      - name: truck
+    source:
+      - entity_id: camera.frontdoorcam
+    file_out:
+      - "/doods/images/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/doods/images/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+
+camera:
+  - platform: local_file
+    name: doods_frontdoorcam
+    file_path: /doods/images/frontdoorcam_latest.jpg
+
+browser_mod:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+binary_sensor: !include binary_sensor.yaml
+person: !include persons.yaml
+notify: !include notifications.yaml
+
+
+
+

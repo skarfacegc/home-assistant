@@ -1,0 +1,94 @@
+- alias: 'Set theme at startup'
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: ios-dark-mode
+      
+      
+- alias: Garage Ceiling Timer
+  trigger:
+  - entity_id: light.garage_ceiling_14
+    platform: state
+    to: 'on'
+    for: '00:30:00'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.garage_ceiling_14
+
+- alias: Kitchen Door Garage Light
+  trigger:
+    platform: state
+    entity_id:
+      - binary_sensor.kitchen_door
+    to: "on"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.garage_ceiling_14
+
+- alias: Sundown
+  trigger:
+  - platform: sun
+    event: sunset
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:  group.outside
+  - service: switch.turn_on
+    data:
+      entity_id: group.outside_lights
+
+
+- alias: Sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: light.turn_off
+    data:
+      entity_id:  group.outside
+  - service: switch.turn_off
+    data:
+      entity_id: group.outside_lights
+
+- alias: Notify Away
+  trigger:
+  - entity_id: person.andrew
+    platform: state
+    to: not_home
+  - entity_id: person.liz
+    platform: state
+    to: not_home
+  - entity_id: person.trish
+    platform: state
+    to: not_home
+  action:
+  - data_template:
+      message: "{{ trigger.from_state.name }} left home"
+    service: notify.drew
+
+- alias: Notify Home
+  trigger:
+  - entity_id: person.andrew
+    platform: state
+    to: home
+  - entity_id: person.liz
+    platform: state
+    to: home
+  - entity_id: person.trish
+    platform: state
+    to: home
+  action:
+  - data_template:
+      message: "{{ trigger.to_state.name }} arrived home"
+    service: notify.drew
+
+
+
+
+
+

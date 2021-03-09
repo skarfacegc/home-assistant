@@ -1,0 +1,32 @@
+- platform: template
+  sensors:
+    garage_door_left:
+      friendly_name: "Garage Door Left"
+      value_template: "{{ state_attr('switch.garage_door_left_29','device_tripped') }}"
+      device_class: garage_door
+    garage_door_right:
+      friendly_name: "Garage Door Right"
+      value_template: "{{ state_attr('switch.garage_door_right_31','device_tripped') }}"
+      device_class: garage_door
+    main_floor_windows:
+      friendly_name: "Main Floor"
+      device_class: window
+      value_template: >-
+        {{ is_state('binary_sensor.living_room_window', 'on')
+        or is_state('binary_sensor.breakfast_nook_windows', 'on')
+        or is_state('binary_sensor.dining_room_window', 'on')
+        or is_state('binary_sensor.garage_windows', 'on') }}
+           
+    upstairs_floor_windows:
+      friendly_name: "Upstairs"
+      device_class: window
+      value_template: >-
+        {{ is_state('binary_sensor.liz_room_windows', 'on')
+        or is_state('binary_sensor.main_bedroom_windows', 'on')
+        or is_state('binary_sensor.girl_scout_room_windows', 'on') }}            
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+living_room:
+  name: Living Room
+  icon: mdi:lightbulb
+  entities:
+    - light.main_hall_outlet_22
+    - light.livingroom_tv_lights
+    - light.lizard_16
+    - switch.upstairs_mantel_36
+
+basement:
+  name: Basement
+  icon: mdi:lightbulb
+  entities:
+    - light.basement_tv_lights
+    - light.bar_outlet_20
+    - light.ravens_neon_24
+    - light.drew_office_ceiling_13
+    - remote.basement
+    - light.hall_mirror
+
+alarm_sensors:
+  name: Alarm Sensors
+  icon: mdi:sensors
+  entities:
+    - binary_sensor.breakfast_nook_windows
+    - binary_sensor.dining_room_window
+    - binary_sensor.front_door
+    - binary_sensor.front_room_window
+    - binary_sensor.garage_windows
+    - binary_sensor.girl_scout_room_windows
+    - binary_sensor.kitchen_door
+    - binary_sensor.living_room_motion
+    - binary_sensor.living_room_window
+    - binary_sensor.liz_room_windows
+    - binary_sensor.main_bedroom_windows
+    - binary_sensor.main_hall_motion
+
+outside_lights:
+  name: Outside Lights
+  icon: mdi:home
+  entities:
+    - light.garage_outside_15
+    - light.backdoor_light_17
+    - light.front_door_23
+
+outside_other:
+  name: Outside Other
+  icon: mdi:home
+  entities:
+    - switch.outdoor_plug_21
+
+outside:
+  name: Outside
+  icon: mdi:home
+  entities:
+    - group.outside_lights
+    - group.outside_other
+    
+

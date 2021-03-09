@@ -1,0 +1,382 @@
+title: Main Home
+themable_grid:
+  padding: 0
+  gap: 8px
+  breakpoints:
+    - name: mobile
+      mq: '(max-width: 767px)'
+      columns: 2
+    - name: tablet
+      mq: '(min-width: 768px) and (max-width: 1023px)'
+      columns: 4
+    - name: desktop
+      mq: '(min-width: 1024px)'
+      columns: 4
+
+decluttering_templates:
+  header:
+    default:
+      - main_color: rgb(50,50,50)
+      - basement_color: rgb(50,50,50)
+      - livingroom_color: rgb(50,50,50)
+      - misc_color: rgb(50,50,50)
+    card:
+      type: "custom:stack-in-card" # Header
+      mode: horizontal
+      keep:
+        background: true
+        border_radius: false
+      cards:
+        - type: 'custom:button-card'
+          name: Main
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace/main
+          color_type: card
+          color: '[[main_color]]'
+          styles:
+            card:
+              - font-size: 32px
+              - font-weight: bold
+              - opacity: 80%
+        - type: 'custom:button-card'
+          name: Living Room
+          tap_action: 
+            action: navigate
+            navigation_path: /lovelace/livingroom
+          color_type: card
+          color: '[[livingroom_color]]'
+          styles:
+            card:
+              - font-size: 32px
+              - font-weight: bold
+              - opacity: 80%
+        - type: 'custom:button-card'
+          name: Basement
+          tap_action: 
+            action: navigate
+            navigation_path: /lovelace/basement
+          color_type: card
+          color: '[[basement_color]]'
+          styles:
+            card:
+              - font-size: 32px
+              - font-weight: bold
+              - opacity: 80%
+        - type: 'custom:button-card'
+          name: Misc
+          tap_action: 
+            action: navigate
+            navigation_path: /lovelace/misc
+          color_type: card
+          color: '[[misc_color]]'
+          styles:
+            card:
+              - font-size: 32px
+              - font-weight: bold
+              - opacity: 80%
+  alarm_sensor:
+    card:
+      type: custom:button-card
+      color_type: card
+      name: '[[name]]'
+      entity: '[[entity]]'
+      styles:
+        card:
+          - filter: opacity(0%);
+        icon:
+          - filter: opacity(90%)
+        name:
+          - filter: opacity(90%)
+  scene_button:
+    default:
+      - transition: 0
+    card:    
+      type: 'custom:button-card'
+      name: '[[name]]'
+      icon: '[[icon]]'
+      styles:
+        icon:
+          - padding: 16px
+        name:
+          - padding: 16px
+      tap_action:
+        action: call-service
+        service: scene.turn_on
+        service_data:
+          entity_id: '[[scene_id]]'
+          transition: '[[transition]]'
+
+kiosk_mode:
+  hide_header: true
+  mobile_settings:
+    hide_header: true
+    hide_sidebar: false
+
+views:
+  - title: Main
+    path: main
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:decluttering-card # header
+            template: header
+            variables:
+              - main_color: rgb(50,100,100)
+          - type: "custom:themable-grid" # sensors
+            cards: 
+              - type: horizontal-stack
+                cards:
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Living Room
+                      - entity: binary_sensor.living_room_motion
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Main Hall
+                      - entity: binary_sensor.main_hall_motion
+              - type: horizontal-stack
+                cards:
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Main Floor
+                      - entity: binary_sensor.main_floor_windows
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Upstairs
+                      - entity: binary_sensor.upstairs_floor_windows
+              - type: horizontal-stack        
+                cards: 
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Garage Left
+                      - entity: binary_sensor.garage_door_left
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Garage Right
+                      - entity: binary_sensor.garage_door_right
+              - type: horizontal-stack
+                cards:
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Front
+                      - entity: binary_sensor.front_door
+                  - type: custom:decluttering-card
+                    template: alarm_sensor
+                    variables:
+                      - name: Kitchen
+                      - entity: binary_sensor.kitchen_door
+          - type: "custom:themable-grid" # main content
+            cards:
+            - name: Main Floor
+              type: thermostat
+              entity: climate.entryway
+            - name: Upstairs
+              type: thermostat
+              entity: climate.upstairs_thermostat_18    
+            - type: picture-entity
+              entity: binary_sensor.frontdoormotion
+              camera_image: camera.frontdoorcam
+              camera_view: live
+            - type: picture-entity
+              name: Object Detection
+              entity: image_processing.doods_frontdoorcam
+              camera_image: camera.doods_frontdoorcam
+              camera_view: live
+            - type: weather-forecast
+              entity: weather.home_hourly
+              theme:
+                font_size: 48px
+              grid:
+                grid-column: 1 / span 2
+            - type: entities
+              entities:
+                - person.andrew
+                - person.liz
+                - person.trish
+            
+
+          
+  - title: LivingRoom
+    panel: true
+    path: livingroom
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:decluttering-card # header
+            template: header
+            variables:
+              - livingroom_color: rgb(50,100,100)
+          - type: "custom:themable-grid" # main content
+            cards:
+              - name: Livingroom Off
+                type: 'custom:button-card'
+                styles:
+                  icon:
+                    - padding: 16px
+                  name:
+                    - padding: 16px
+                icon: "mdi:power"
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.livingroom_off
+              - name: Livingroom Dim
+                type: 'custom:button-card'
+                styles:
+                  icon:
+                    - padding: 16px
+                  name:
+                    - padding: 16px
+                icon: "mdi:lightbulb-outline"
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.livingroom_dim
+              - name: Livingroom Bright
+                type: 'custom:button-card'
+                styles:
+                  icon:
+                    - padding: 16px
+                  name:
+                    - padding: 16px
+                icon: "mdi:lightbulb-on"
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.livingroom_bright                    
+              - name: TV Lights
+                type: light
+                icon: "mdi:lightbulb"
+                entity: light.livingroom_tv_lights
+              - name: Recliner Lamp
+                type: button
+                entity: light.main_hall_outlet_22
+              - name: Mantel
+                type: button
+                entity: switch.upstairs_mantel_36
+              - name: Christmas Tree
+                type: button
+                icon: "mdi:string-lights"
+                entity: switch.christmas_tree_37
+              - name: Lizard
+                type: button
+                entity: light.lizard_16
+
+  - title: Basement
+    path: basement
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:decluttering-card #heaer
+            template: header
+            variables:
+              - basement_color: rgb(50,100,100)
+          - type: 'custom:themable-grid' # main content
+            cards:
+            - type: custom:decluttering-card
+              template: scene_button
+              variables:
+                - name: Basement Off
+                - icon: "mdi:power"
+                - scene_id: scene.basement_off
+            - type: custom:decluttering-card
+              template: scene_button
+              variables:
+                - name: Basement Dim
+                - icon: "mdi:lightbulb-outline"
+                - scene_id: scene.basement_dim 
+                - transition: 2
+            - type: custom:decluttering-card
+              template: scene_button
+              variables:
+                - name: Basement Bright
+                - icon: "mdi:lightbulb-on"
+                - scene_id: scene.basement_bright
+                - transition: 2
+            - name: Basement TV Lights
+              type: light
+              entity: light.basement_tv_lights
+            - name: Basement TV
+              icon: "mdi:television"
+              type: "custom:button-card"
+              entity: remote.basement
+              tap_action:
+                action: toggle
+              styles:
+                icon:
+                  - padding: 16px
+                name:
+                  - padding: 16px
+            - name: Ravens Neon
+              type: button
+              icon: "mdi:football-helmet"
+              entity: light.ravens_neon_24
+            - name: Office
+              type: light
+              entity: light.drew_office_ceiling_13
+            - name: Hall Mirror
+              type: light
+              entity: light.hall_mirror
+            - name: Bar Lamp
+              entity: light.bar_outlet_20
+              type: button
+
+  - title: Misc
+    path: misc
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:decluttering-card # header
+            template: header
+            variables:
+              - misc_color: rgb(50,100,100)
+          - type: custom:themable-grid
+            cards:
+              - entity: light.garage_outside_15
+                type: custom:button-card
+              - entity: light.backdoor_light_17
+                type: custom:button-card
+              - entity: light.front_door_23
+                type: custom:button-card
+              - entity: switch.outdoor_plug_21
+                type: custom:button-card
+              - entity: light.garage_ceiling_14
+                type: custom:button-card
+              - type: entities
+                title: Automations
+                show_header_toggle: false
+                entities:
+                  - entity: automation.kitchen_door_garage_light
+                    secondary_info: last-triggered
+                  - entity: automation.garage_ceiling_timer
+                    secondary_info: last-triggered
+                  - entity: automation.sundown
+                    secondary_info: last-triggered
+                  - entity: automation.sunrise
+                    secondary_info: last-triggered
+                grid:
+                  grid-column: 
+                    mobile: 1 / span 2
+              - type: custom:xiaomi-vacuum-card
+                entity: vacuum.roomba
+                name: bob
+                vendor: roomba
+                state:
+                  mode: false
+                grid:
+                  grid-column: 
+                    mobile: 1 / span 2  
