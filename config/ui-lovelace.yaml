@@ -20,6 +20,7 @@ decluttering_templates:
       - basement_color: rgb(50,50,50)
       - livingroom_color: rgb(50,50,50)
       - misc_color: rgb(50,50,50)
+      - sensors_color: rgb(50,50,50)
     card:
       type: "custom:stack-in-card" # Header
       mode: horizontal
@@ -76,7 +77,20 @@ decluttering_templates:
           styles:
             card:
               - height: 70px
+              - width: 100px
               - opacity: 80%
+        - type: 'custom:button-card'
+          icon: mdi:shield-home
+          tap_action: 
+            action: navigate
+            navigation_path: /lovelace/sensors
+          color_type: card
+          color: '[[sensors_color]]'
+          styles:
+            card:
+              - height: 70px
+              - width: 100px
+              - opacity: 80%              
   alarm_sensor:
     card:
       type: custom:button-card
@@ -204,9 +218,7 @@ views:
                 - person.andrew
                 - person.liz
                 - person.trish
-            
-
-          
+                      
   - title: LivingRoom
     panel: true
     path: livingroom
@@ -383,3 +395,87 @@ views:
                 grid:
                   grid-column: 
                     mobile: 1 / span 2  
+
+  - title: Sensors
+    icon: mdi:shield-home
+    path: sensors
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:decluttering-card # header
+            template: header
+            variables:
+              - sensors_color: rgb(50,100,100)
+          - type: custom:themable-grid
+            cards:
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Front
+                  - entity: binary_sensor.front_door
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Kitchen
+                  - entity: binary_sensor.kitchen_door
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Left
+                  - entity: binary_sensor.garage_door_left
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Right
+                  - entity: binary_sensor.garage_door_right
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Main Hall
+                  - entity: binary_sensor.main_hall_motion
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Living Room
+                  - entity: binary_sensor.living_room_motion
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Breakfast Nook
+                  - entity: binary_sensor.breakfast_nook_windows
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Dining Room
+                  - entity: binary_sensor.dining_room_window
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Living Room
+                  - entity: binary_sensor.living_room_window
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Front Room
+                  - entity: binary_sensor.front_room_window
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Garage
+                  - entity: binary_sensor.garage_windows
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Girl Scout Room
+                  - entity: binary_sensor.girl_scout_room_windows
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Liz's Room
+                  - entity: binary_sensor.liz_room_windows
+              - type: custom:decluttering-card
+                template: alarm_sensor
+                variables:
+                  - name: Main Bedroom
+                  - entity: binary_sensor.main_bedroom_windows
