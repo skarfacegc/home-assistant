@@ -19,6 +19,22 @@
     data:
       entity_id: light.garage_ceiling_14
 
+- alias: Garage Open Notifier
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garage_door_left
+      to: "on"
+      for: "00:30:00"
+    - platform: state
+      entity_id: binary_sensor.garage_door_right
+      to: "on"
+      for: "00:30:00"
+  action:
+    - service: notify.drew
+      data_template:
+        message: "Garage door left open"
+
+
 - alias: Kitchen Door Garage Light
   trigger:
     platform: state
