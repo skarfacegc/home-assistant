@@ -36,6 +36,7 @@ decluttering_templates:
           color: '[[main_color]]'
           styles:
             card:
+              - height: 70px
               - font-size: 32px
               - font-weight: bold
               - opacity: 80%
@@ -48,6 +49,7 @@ decluttering_templates:
           color: '[[livingroom_color]]'
           styles:
             card:
+              - height: 70px
               - font-size: 32px
               - font-weight: bold
               - opacity: 80%
@@ -60,11 +62,12 @@ decluttering_templates:
           color: '[[basement_color]]'
           styles:
             card:
+              - height: 70px
               - font-size: 32px
               - font-weight: bold
               - opacity: 80%
         - type: 'custom:button-card'
-          name: Misc
+          icon: mdi:cog
           tap_action: 
             action: navigate
             navigation_path: /lovelace/misc
@@ -72,8 +75,7 @@ decluttering_templates:
           color: '[[misc_color]]'
           styles:
             card:
-              - font-size: 32px
-              - font-weight: bold
+              - height: 70px
               - opacity: 80%
   alarm_sensor:
     card:
@@ -335,6 +337,7 @@ views:
               type: button
 
   - title: Misc
+    icon: mdi:cog
     path: misc
     panel: true
     cards:
