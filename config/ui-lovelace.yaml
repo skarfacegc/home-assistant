@@ -97,6 +97,9 @@ decluttering_templates:
       color_type: card
       name: '[[name]]'
       entity: '[[entity]]'
+      tap_action:
+            action: navigate
+            navigation_path: /lovelace/sensors
       styles:
         card:
           - filter: opacity(0%);
@@ -409,6 +412,21 @@ views:
               - sensors_color: rgb(50,100,100)
           - type: custom:themable-grid
             cards:
+              - type: picture-entity
+                entity: binary_sensor.frontdoormotion
+                camera_image: camera.frontdoorcam
+                camera_view: live
+                grid:
+                  grid-column: 1 / span 2
+                  grid-row: 1 / span 2
+              - type: picture-entity
+                name: Object Detection
+                entity: image_processing.doods_frontdoorcam
+                camera_image: camera.doods_frontdoorcam
+                camera_view: live
+                grid:
+                  grid-column: 3 / span 2
+                  grid-row: 1 / span 2
               - type: custom:decluttering-card
                 template: alarm_sensor
                 variables:
